@@ -1,5 +1,5 @@
-import { PreferencesUtil } from "../utils/PreferencesUtil";
-import { ThemeUtil } from "../utils/ThemeUtil";
+import { PreferencesUtil } from '../utils/PreferencesUtil';
+import { ThemeUtil } from '../utils/ThemeUtil';
 
 @Component
 export struct QuizResultPage {
@@ -9,7 +9,7 @@ export struct QuizResultPage {
   private onQuizFinish?: (quizResult: number) => void;
 
   aboutToAppear() {
-    this.isDarkMode = this.preferencesUtil.getDarkModePreference();
+    this.isDarkMode = this.preferencesUtil.getDarkModePreference(this.getUIContext().getHostContext() as Context);
   }
 
   private getPerformanceMessage(): string {

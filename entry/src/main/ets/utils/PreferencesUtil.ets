@@ -30,7 +30,7 @@ export class PreferencesUtil {
     }
   }
 
-  getDarkModePreference(): boolean {
+  getDarkModePreference(context: Context): boolean {
     if (!this.dataPreferences) {
       console.warn('Preferences not initialized');
       return false;
@@ -38,8 +38,7 @@ export class PreferencesUtil {
 
     try {
       const isDarkMode = this.dataPreferences.getSync(
-
-        getContext(this)
+           context
           .resourceManager
           .getStringSync(this.DARK_MODE_KEY.id)
 
@@ -52,7 +51,7 @@ export class PreferencesUtil {
     }
   }
 
-  saveDarkModePreference(isDarkMode: boolean, callback?: () => void): void {
+  saveDarkModePreference(isDarkMode: boolean, context: Context, callback?: () => void): void {
     if (!this.dataPreferences) {
       console.warn('Preferences not initialized');
       return;
@@ -61,7 +60,7 @@ export class PreferencesUtil {
     try {
       this.dataPreferences.putSync(
 
-        getContext(this)
+        context
           .resourceManager
           .getStringSync(this.DARK_MODE_KEY.id)
         , isDarkMode);
@@ -81,11 +80,11 @@ export class PreferencesUtil {
     }
   }
 
-  toggleDarkMode(callback?: (newState: boolean) => void): void {
-    const currentState = this.getDarkModePreference();
+  toggleDarkMode(context: Context, callback?: (newState: boolean) => void): void {
+    const currentState = this.getDarkModePreference(context);
     const newState = !currentState;
 
-    this.saveDarkModePreference(newState, () => {
+    this.saveDarkModePreference(newState,context, () => {
       if (callback) {
         callback(newState);
       }

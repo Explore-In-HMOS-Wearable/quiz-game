@@ -26,7 +26,7 @@ export struct QuizPage {
     if (this.topic) {
       this.questions = this.quizViewModel.getQuestionsForTopic(this.topic);
       this.userAnswers = new Array(this.questions.length).fill(-1);
-      this.isDarkMode = this.preferencesUtil.getDarkModePreference();
+      this.isDarkMode = this.preferencesUtil.getDarkModePreference(this.getUIContext().getHostContext() as Context);
       this.currentQuestionIndex = 0;
       this.isQuizCompleted = false;
       this.quizResult = null;
@@ -47,7 +47,7 @@ export struct QuizPage {
 
   private finishQuiz() {
     this.quizResult = this.quizViewModel.calculateResult(this.topic, this.userAnswers);
-    console.log(this.quizResult.score.toString())
+    console.info(this.quizResult.score.toString())
     this.isQuizCompleted = true;
     if (this.onShowResult) {
       this.onShowResult(this.quizResult.score);

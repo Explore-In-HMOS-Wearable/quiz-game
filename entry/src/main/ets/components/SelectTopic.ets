@@ -10,7 +10,6 @@ export struct SelectTopic {
   private preferencesUtil: PreferencesUtil = PreferencesUtil.getInstance();
   private clickableSlices: ClickableSlice[] = [];
   private onStartQuiz?: (topic: string) => void;
-
   private topics: string[] = [
     'History', 'Science', 'Geography', 'Sports', 'Art', 'Music'
   ];
@@ -23,16 +22,16 @@ export struct SelectTopic {
 
   private async initComponent() {
     try {
-      const context = getContext(this) as common.UIAbilityContext;
-      await this.preferencesUtil.initPreferences(context);
-      this.isDarkMode = this.preferencesUtil.getDarkModePreference();
+      await this.preferencesUtil.initPreferences(this.getUIContext().getHostContext() as common.UIAbilityContext);
+      this.isDarkMode = this.preferencesUtil.getDarkModePreference(this.getUIContext().getHostContext() as common.UIAbilityContext);
     } catch (err) {
       console.error('Failed to initialize component:', err);
     }
   }
 
   private toggleTheme() {
-    this.preferencesUtil.toggleDarkMode((newState: boolean) => {
+    this.preferencesUtil.toggleDarkMode(this.getUIContext().getHostContext() as Context,
+      (newState: boolean) => {
       this.isDarkMode = newState;
       this.redrawCanvas();
     });
